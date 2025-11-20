@@ -17,6 +17,8 @@ Small collection of scripts to obtain Let's Encrypt / ZeroSSL certificates using
 
 ### Enough to run them as follows
 
+First login to your cluster with admin credentials copying oc command from OpenShift console or with kubeconfig file.
+
 1. Install/update acme.sh and provide AWS credentials:
 
 ``` . ./00-install-let-encrypt-client.sh ```
