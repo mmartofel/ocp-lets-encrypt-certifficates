@@ -1,4 +1,4 @@
 .vscode
 *.log
 certificates
-acme.sh
+acme.sh/
