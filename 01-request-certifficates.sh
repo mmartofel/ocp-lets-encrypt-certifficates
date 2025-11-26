@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Cleanup any previous certifficates and acme.sh data
 rm -rf ${CERTDIR}
 rm -rf ${HOME}/.acme.sh
