@@ -3,6 +3,7 @@
 # Specify the directory where the certifficates are stored
 export CERTDIR=certificates
 
+echo
 echo "Creating TLS secret 'router-certs' in 'openshift-ingress' namespace..."
 echo
 
@@ -11,6 +12,7 @@ oc create secret tls router-certs \
   --key=${CERTDIR}/key.pem \
   -n openshift-ingress
 
+echo
 echo "Patching default ingresscontroller to use the new TLS secret 'router-certs'..."
 echo
 
@@ -19,7 +21,7 @@ oc patch ingresscontroller default \
   --type=merge \
   --patch='{"spec": { "defaultCertificate": { "name": "router-certs" }}}'
 
-# Wait for ingresscontroller pods to be restarted and ready
+echo
 echo "Waiting for ingresscontroller pods to be restarted and ready..."
 INGRESS_PODS=$(oc get pods -n openshift-ingress -l app=router -o jsonpath='{.items[*].metadata.name}')
 for POD in $INGRESS_PODS; do

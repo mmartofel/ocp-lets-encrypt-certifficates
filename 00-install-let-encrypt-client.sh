@@ -1,5 +1,6 @@
 
 # Clone or update acme.sh
+echo
 echo "Cloning or updating acme.sh..."
 echo
 

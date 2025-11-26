@@ -1,15 +1,19 @@
 #!/bin/bash
 
 # Cleanup any previous certifficates and acme.sh data
+export CERTDIR=certificates
 rm -rf ${CERTDIR}
 rm -rf ${HOME}/.acme.sh
 
 # Check if user is logged in to OpenShift CLI
 oc whoami > /dev/null 2>&1
 if [ $? -ne 0 ]; then
+  echo
   echo "You are not logged in to OpenShift CLI. Please log in and try again."
+  echo
   exit 1
 fi 
+echo
 echo "You are logged in to OpenShift CLI as: $(oc whoami)"
 echo
 
@@ -23,7 +27,6 @@ echo ${LE_API}
 echo ${LE_WILDCARD}
 echo
 
-please provide a dialog to input email address for certifficates
 # Portable interactive prompt for email address
 printf "Please enter your email address for Let's Encrypt notifications: "
 read -r EMAIL
@@ -31,13 +34,12 @@ echo
 
 # set account with ZeroSSL and set it as default CA
 acme.sh/acme.sh  --register-account  -m ${EMAIL} --server zerossl
-acme.sh/acme.sh --set-default-ca  --server zerossl
+acme.sh/acme.sh --set-default-ca --server zerossl
 
 # Issue certifficates using DNS-01 challenge with AWS Route 53
-acme.sh/acme.sh --issue -d "${LE_API}" -d "*.${LE_WILDCARD}" --dns dns_aws
+acme.sh/acme.sh --log --issue -d "${LE_API}" -d "*.${LE_WILDCARD}" --dns dns_aws
 
 # Install the certifficates to a specific directory
-export CERTDIR=certificates
 
 mkdir -p ${CERTDIR}
 
