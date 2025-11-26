@@ -4,11 +4,16 @@
 rm -rf ${CERTDIR}
 rm -rf ${HOME}/.acme.sh
 
-# Show OpenShift API server URL
-echo "OpenShift API server URL:"
-oc whoami --show-server
+# Check if user is logged in to OpenShift CLI
+oc whoami > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "You are not logged in to OpenShift CLI. Please log in and try again."
+  exit 1
+fi 
+echo "You are logged in to OpenShift CLI as: $(oc whoami)"
 echo
 
+# Set the domain names for the certifficates
 export LE_API=$(oc whoami --show-server | cut -f 2 -d ':' | cut -f 3 -d '/' | sed 's/-api././')
 export LE_WILDCARD=$(oc get ingresscontroller default -n openshift-ingress-operator -o jsonpath='{.status.domain}')
 
