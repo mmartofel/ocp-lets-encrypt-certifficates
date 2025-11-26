@@ -28,5 +28,7 @@ for POD in $API_PODS; do
   echo "Waiting for pod $POD to be restarted and ready..."
   oc wait --for=condition=Ready pod/$POD -n openshift-apiserver --timeout=300s
 done
+
+echo
 echo "All API server pods are restarted and ready."
 echo

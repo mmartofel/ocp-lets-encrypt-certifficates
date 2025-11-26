@@ -26,5 +26,7 @@ for POD in $INGRESS_PODS; do
   echo "Waiting for pod $POD to be restarted and ready..."
   oc wait --for=condition=Ready pod/$POD -n openshift-ingress --timeout=300s
 done
+
+echo
 echo "All ingresscontroller pods are restarted and ready."
 echo
