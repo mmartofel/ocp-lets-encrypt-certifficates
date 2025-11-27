@@ -27,23 +27,24 @@ I built them for AWS as I can easily provision one but I believe thanks to acme.
 
 First login to your cluster with admin credentials copying oc command from OpenShift console or with kubeconfig file.
 
-1. Install/update acme.sh and provide AWS credentials:
+1. Install/update acme.sh and provide AWS credentials ( ⚠️ beware of two dots in front of a script call here):
 
 ``` . ./00-install-let-encrypt-client.sh ```
-
-2. Request certifficates to find them at 'certifficates' directory
+2. Request certificates to find them at 'certificates' directory
 
 ``` ./01-request-certifficates.sh ```
 
-3. Path default IngressController of your OpenShift cluster:
+> **⚠️ NOTICE:** The following scripts are not working as required at the moment. You need to monitor your cluster for certifficates to be updated.
+
+3. Patch default IngressController of your OpenShift cluster:
 
 ``` ./02-patch-default-ingresscontroller.sh ```
 
-4. Path ApiServer of your OpenShift cluster:
+4. Patch ApiServer of your OpenShift cluster:
 
 ``` ./03-patch-apiserver.sh ```
 
-Now wait for resources to update and here we go, you have your cluster secured well.
+Now wait for resources to update and here we go, you have your cluster secured well with Let's Encrypt issued certifficates.
 
 ### 🔗 Useful Links
 
