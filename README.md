@@ -8,6 +8,7 @@
 
 
 Small collection of scripts to obtain Let's Encrypt / ZeroSSL certificates using acme.sh and install them into an Red Hat OpenShift cluster.
+I built them for AWS as I can easily provision one but I believe thanks to acme.sh portability it can be easily modified for your requirement to work with other providers.
 
 ### Quick overview
 
