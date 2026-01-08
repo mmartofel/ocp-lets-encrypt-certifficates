@@ -4,6 +4,8 @@
 export CERTDIR=certificates
 rm -rf ${CERTDIR}
 rm -rf ${HOME}/.acme.sh
+mkdir -p ${CERTDIR}
+mkdir -p ${HOME}/.acme.sh
 
 # Check if user is logged in to OpenShift CLI
 oc whoami > /dev/null 2>&1
@@ -32,16 +34,14 @@ printf "Please enter your email address for Let's Encrypt notifications: "
 read -r EMAIL
 echo
 
-# set account with ZeroSSL and set it as default CA
-acme.sh/acme.sh  --register-account  -m ${EMAIL} --server zerossl
-acme.sh/acme.sh --set-default-ca --server zerossl
+# Set account with Let's Encrypt and set it as default CA
+acme.sh/acme.sh  --register-account  -m ${EMAIL} --server letsencrypt
+acme.sh/acme.sh --set-default-ca --server letsencrypt
 
 # Issue certifficates using DNS-01 challenge with AWS Route 53
 acme.sh/acme.sh --log --issue -d "${LE_API}" -d "*.${LE_WILDCARD}" --dns dns_aws
 
 # Install the certifficates to a specific directory
-
-mkdir -p ${CERTDIR}
 
 acme.sh/acme.sh --install-cert -d "${LE_API}" -d "*.${LE_WILDCARD}" \
   --cert-file ${CERTDIR}/cert.pem \
